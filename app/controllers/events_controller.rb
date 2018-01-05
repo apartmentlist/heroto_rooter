@@ -3,7 +3,7 @@ class EventsController < ApplicationController
     event = Event.new(event_params)
 
     if event.save
-      SlackNotifier.new(event).notify!
+      SlackNotifier.new(event.notification).notify! if event.notification
       head :ok
     else
       Rails.logger.error(event.errors.full_messages)

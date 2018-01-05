@@ -1,20 +1,20 @@
 class SlackNotifier
-  attr_reader :event
+  attr_reader :notification
 
-  def initialize(event)
-    @event = event
+  def initialize(notification)
+    @notification = notification
     @slack = Slack::Web::Client.new
   end
 
   def notify!
-    rooter = Rooter.find_by(app: event.app)
+    rooter = Rooter.find_by(app: notification.app)
     return unless rooter
 
     slack.chat_postMessage(
       channel: "##{rooter.channel}",
       icon_emoji: ":#{rooter.emoji}:",
-      text: "#{event.resource} #{event.action}",
-      username: event.app
+      text: notification.body,
+      username: notification.app
     )
   end
 
