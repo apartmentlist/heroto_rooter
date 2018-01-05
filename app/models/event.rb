@@ -1,3 +1,3 @@
 class Event < ApplicationRecord
-  validates :app, :name, :payload, presence: true
+  validates :app, :resource, :action, :payload, presence: true
 end

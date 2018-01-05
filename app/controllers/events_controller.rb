@@ -16,7 +16,7 @@ class EventsController < ApplicationController
   def event_params
     {
       app: params.dig(*%w[data name]) || params.dig(*%w[data app name]),
-      name: params.dig(*%w[webhook_metadata event include]),
+      resource: params['resource'],
       action: params['action'],
       payload: JSON.parse(request.body.read)
     }

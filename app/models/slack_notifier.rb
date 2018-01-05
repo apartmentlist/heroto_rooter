@@ -13,7 +13,7 @@ class SlackNotifier
     slack.chat_postMessage(
       channel: "##{rooter.channel}",
       icon_emoji: ":#{rooter.emoji}:",
-      text: event.name,
+      text: "#{event.resource} #{event.action}",
       username: event.app
     )
   end
