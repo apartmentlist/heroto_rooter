@@ -1,12 +1,13 @@
 class EventsController < ApplicationController
   def create
-    @event = Event.new(event_params)
+    event = Event.new(event_params)
 
-    if @event.save
+    if event.save
+      SlackNotifier.new(event).notify!
       head :ok
     else
-      Rails.logger.error(@event.errors.full_messages)
-      render json: @event.errors, status: :unprocessable_entity
+      Rails.logger.error(event.errors.full_messages)
+      render json: event.errors, status: :unprocessable_entity
     end
   end
 
