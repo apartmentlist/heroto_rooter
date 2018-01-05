@@ -17,6 +17,7 @@ class EventsController < ApplicationController
     {
       app: params.dig(*%w[data name]) || params.dig(*%w[data app name]),
       name: params.dig(*%w[webhook_metadata event include]),
+      action: params['action'],
       payload: JSON.parse(request.body.read)
     }
   end
