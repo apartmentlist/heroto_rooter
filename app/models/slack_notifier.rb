@@ -7,9 +7,12 @@ class SlackNotifier
   end
 
   def notify!
+    rooter = Rooter.find_by(app: event.app)
+    return unless rooter
+
     slack.chat_postMessage(
-      channel: '#hackathon',
-      icon_emoji: ':mega:',
+      channel: "##{rooter.channel}",
+      icon_emoji: ":#{rooter.emoji}:",
       text: event.name,
       username: event.app
     )
