@@ -6,6 +6,10 @@ module Notification
       @event = event
     end
 
+    def actor
+      event.actor.capitalize
+    end
+
     def app
       event.app
     end
@@ -13,6 +17,10 @@ module Notification
     def body
       raise NotImplementedError,
         "##{__method__} must be implemented by a subclass"
+    end
+
+    def data
+      event.payload['data']
     end
   end
 end

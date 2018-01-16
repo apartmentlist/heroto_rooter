@@ -12,7 +12,8 @@ class Event < ApplicationRecord
   end
 
   NOTIFICATION_MAP = {
-    %w[release create] => Notification::Deploy
+    %w[formation update] => Notification::Scale,
+    %w[release   create] => Notification::Deploy
   }
 
   def actor
