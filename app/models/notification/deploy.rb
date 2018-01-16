@@ -1,7 +1,15 @@
 module Notification
   class Deploy < Base
     def body
-      "#{actor} deployed v#{version}: #{sha}"
+      [
+        "#{actor} deployed v#{version}: #{sha}",
+        description
+      ].compact.join("\n")
+    end
+
+    def description
+      return if data['description'] =~ /\ADeploy /
+      "> #{data['description']}"
     end
 
     def sha
