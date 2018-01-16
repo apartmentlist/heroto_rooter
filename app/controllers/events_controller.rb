@@ -15,10 +15,14 @@ class EventsController < ApplicationController
 
   def event_params
     {
-      app: params.dig(*%w[data app name]) || params.dig(*%w[data name]),
-      resource: params['resource'],
-      action: params['action'],
-      payload: JSON.parse(request.body.read)
+      app: payload.dig(*%w[data app name]) || payload.dig(*%w[data name]),
+      resource: payload['resource'],
+      action: payload['action'],
+      payload: payload
     }
+  end
+
+  def payload
+    @payload ||= JSON.parse(request.body.read)
   end
 end
