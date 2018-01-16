@@ -25,6 +25,7 @@ class Event < ApplicationRecord
 
   def duplicate?
     recent = previous_success
+    return false unless recent
     recent.successful? && recent.created_at > created_at - 1.minute
   end
 
