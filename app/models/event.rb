@@ -1,6 +1,8 @@
 class Event < ApplicationRecord
   validates :app, :resource, :action, :payload, presence: true
 
+  before_create :set_message
+
   module Status
     PENDING         = 'pending'
     SUCCESSFUL      = 'successful'
@@ -27,7 +29,7 @@ class Event < ApplicationRecord
   def duplicate?
     recent = previous_success
     return false unless recent
-    recent.successful? && recent.created_at > created_at - 1.minute
+    message == recent.message
   end
 
   def failed!
@@ -59,6 +61,10 @@ class Event < ApplicationRecord
 
   def not_implemented!
     update_attributes!(status: Status::NOT_IMPLEMENTED)
+  end
+
+  def set_message
+    self.message ||= notification&.body
   end
 
   def successful!

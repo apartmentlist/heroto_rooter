@@ -16,22 +16,18 @@ class SlackNotifier
 
   private
 
-  def notification
-    event.notification
-  end
-
   def post!
     slack.chat_postMessage(
       channel: "##{rooter.channel}",
       icon_emoji: ":#{rooter.emoji}:",
-      text: notification.body,
-      username: notification.app
+      text: event.message,
+      username: event.app
     )
   end
 
   def rooter
     return @rooter if instance_variable_defined?('@rooter')
-    @rooter = notification && Rooter.find_by(app: notification.app)
+    @rooter = Rooter.find_by(app: event.app)
   end
 
   def slack
@@ -40,7 +36,7 @@ class SlackNotifier
 
   def validate!
     event.filtered! and return false if ActorFilter.new(event).filter?
-    event.not_implemented! and return false unless notification
+    event.not_implemented! and return false unless event.message
     event.not_configured! and return false unless rooter
     event.debounced! and return false if event.duplicate?
     true
