@@ -2,7 +2,7 @@ class ActorFilter
   attr_reader :event
 
   ANNOYING_ACTORS = %w[
-    heroku-postgres
+    heroku-postgresql
     heroku-redis
   ]
 
