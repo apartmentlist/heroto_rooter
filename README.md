@@ -38,7 +38,10 @@ read into the
 Heroku needs to know where to send events. You can pick and choose your events
 if you like, or subscribe to everything with:
 
-    ./scripts/add_webhooks.rb app [app ...]
+    ./scripts/add_webhooks.rb <host> <app> [app ...]
+    
+- `host` is your instance's application host, eg. `rooter.example.com`
+- `app` is the name (or many names) of the Heroku app to install the webhook on
 
 ## Adding new notifications
 
