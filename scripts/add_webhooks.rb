@@ -14,7 +14,9 @@ RESOURCES = %w[
   api:ssl-endpoint
 ]
 
-URL = 'https://heroto-rooter.herokuapp.com/events'
+apps = ARGV.to_a
+ROOTER_HOST = apps.shift
+URL = "https://#{ROOTER_HOST}/events"
 
 def cmd(app)
   <<-CMD.gsub(/\s+/x, ' ').strip
@@ -26,10 +28,9 @@ def cmd(app)
   CMD
 end
 
-apps = ARGV.to_a
-
 if apps.empty?
-  puts "Usage: #{__FILE__} app [app ...]"
+  puts "Usage: #{__FILE__} <rooter_host> <app> [app ...]"
+  puts "Eg: #{__FILE__} rooter.example.com my-app"
   exit 1
 end
 
