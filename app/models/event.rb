@@ -2,11 +2,12 @@ class Event < ApplicationRecord
   validates :app, :resource, :action, :payload, presence: true
 
   module Status
-    PENDING        = 'pending'
-    SUCCESSFUL     = 'successful'
-    FAILED         = 'failed'
-    DEBOUNCED      = 'debounced'
-    NOT_CONFIGURED = 'not_configured'
+    PENDING         = 'pending'
+    SUCCESSFUL      = 'successful'
+    FAILED          = 'failed'
+    DEBOUNCED       = 'debounced'
+    NOT_CONFIGURED  = 'not_configured'
+    NOT_IMPLEMENTED = 'not_implemented'
   end
 
   NOTIFICATION_MAP = {
@@ -43,6 +44,10 @@ class Event < ApplicationRecord
 
   def not_configured!
     update_attributes!(status: Status::NOT_CONFIGURED)
+  end
+
+  def not_implemented!
+    update_attributes!(status: Status::NOT_IMPLEMENTED)
   end
 
   def successful!
