@@ -5,7 +5,7 @@ module Notification
     end
 
     def actor
-      event.payload.dig(*%w[actor email]).split('@').first.capitalize
+      event.actor.capitalize
     end
 
     def data

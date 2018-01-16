@@ -6,6 +6,7 @@ class Event < ApplicationRecord
     SUCCESSFUL      = 'successful'
     FAILED          = 'failed'
     DEBOUNCED       = 'debounced'
+    FILTERED        = 'filtered'
     NOT_CONFIGURED  = 'not_configured'
     NOT_IMPLEMENTED = 'not_implemented'
   end
@@ -13,6 +14,10 @@ class Event < ApplicationRecord
   NOTIFICATION_MAP = {
     %w[release create] => Notification::Deploy
   }
+
+  def actor
+    payload.dig(*%w[actor email]).split('@').first
+  end
 
   def debounced!
     update_attributes!(status: Status::DEBOUNCED)
@@ -25,6 +30,10 @@ class Event < ApplicationRecord
 
   def failed!
     update_attributes!(status: Status::FAILED)
+  end
+
+  def filtered!
+    update_attributes!(status: Status::FILTERED)
   end
 
   def previous_success

@@ -39,6 +39,7 @@ class SlackNotifier
   end
 
   def validate!
+    event.filtered! and return false if ActorFilter.new(event).filter?
     event.not_implemented! and return false unless notification
     event.not_configured! and return false unless rooter
     event.debounced! and return false if event.duplicate?
