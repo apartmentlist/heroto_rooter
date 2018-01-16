@@ -1,15 +1,29 @@
 class SlackNotifier
-  attr_reader :notification
+  attr_reader :notification, :rooter
 
   def initialize(notification)
     @notification = notification
     @slack = Slack::Web::Client.new
+    @rooter = Rooter.find_by(app: notification.app)
   end
 
   def notify!
-    rooter = Rooter.find_by(app: notification.app)
-    return unless rooter
+    event.not_configured! and return unless rooter
+    event.debounced! and return if event.duplicate?
+    post!
+    event.successful!
+  rescue
+    event.failed!
+    raise
+  end
 
+  private
+
+  def event
+    notification.event
+  end
+
+  def post!
     slack.chat_postMessage(
       channel: "##{rooter.channel}",
       icon_emoji: ":#{rooter.emoji}:",
@@ -17,8 +31,6 @@ class SlackNotifier
       username: notification.app
     )
   end
-
-  private
 
   attr_reader :slack
 end
