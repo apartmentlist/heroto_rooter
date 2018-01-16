@@ -1,7 +1,11 @@
 module Notification
   class Deploy < Base
     def body
-      "Deployed v#{version}: #{sha}"
+      "#{actor} deployed v#{version}: #{sha}"
+    end
+
+    def actor
+      event.payload.dig(*%w[actor email]).split('@').first.capitalize
     end
 
     def data
