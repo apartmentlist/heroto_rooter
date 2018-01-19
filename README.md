@@ -13,7 +13,16 @@ events](https://devcenter.heroku.com/articles/app-webhooks) to Slack.
 
 ## Configuration
 
-### Routing
+### Slack (once)
+
+Create a new [bot
+integration](https://apartmentlist.slack.com/apps/manage/custom-integrations)
+and set the API key into the `SLACK_API_TOKEN` environment varible, which is
+read into the
+[slack-ruby-client](https://github.com/slack-ruby/slack-ruby-client) in
+`config/initializers/slack.rb`.
+
+### Routing (For each app)
 
 Routing is set in the `Rooter` objects. Add one with the application name, Slack
 channel, and emoji to use as the avatar.
@@ -24,16 +33,7 @@ channel, and emoji to use as the avatar.
       emoji: 'speaking_head_in_silhouette'
     )
 
-### Slack
-
-Create a new [bot
-integration](https://apartmentlist.slack.com/apps/manage/custom-integrations)
-and set the API key into the `SLACK_API_TOKEN` environment varible, which is
-read into the
-[slack-ruby-client](https://github.com/slack-ruby/slack-ruby-client) in
-`config/initializers/slack.rb`.
-
-### Heroku
+### Heroku (For each app)
 
 Heroku needs to know where to send events. You can pick and choose your events
 if you like, or subscribe to everything with:
