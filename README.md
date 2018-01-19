@@ -6,7 +6,7 @@ events](https://devcenter.heroku.com/articles/app-webhooks) to Slack.
 
 ## Setup
 
-    git clone https://github.com/heroto_rooter.git
+    git clone https://github.com/apartmentlist/heroto_rooter.git
     bundle install
     rake db:create
     rake db:migrate
