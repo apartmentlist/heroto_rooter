@@ -4,6 +4,7 @@ class ActorFilter
   ANNOYING_ACTORS = %w[
     heroku-postgresql
     heroku-redis
+    hirefire
   ]
 
   def initialize(event)
@@ -11,6 +12,8 @@ class ActorFilter
   end
 
   def filter?
-    event.actor.in?(ANNOYING_ACTORS)
+    ANNOYING_ACTORS.any? do |actor|
+      event.actor.include?(actor)
+    end
   end
 end
