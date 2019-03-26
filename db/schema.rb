@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116032923) do
+ActiveRecord::Schema.define(version: 2018_01_16_032923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(version: 20180116032923) do
   end
 
   create_table "rooters", force: :cascade do |t|
-    t.string "app"
-    t.string "channel"
-    t.string "emoji"
+    t.string "app", null: false
+    t.string "channel", null: false
+    t.string "emoji", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
